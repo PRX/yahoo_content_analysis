@@ -21,18 +21,18 @@ Or install it yourself as:
     $ gem install yahoo_content_analysis
 
 ## Usage
+```ruby
+require 'yahoo_content_analysis'
 
-    require 'yahoo_content_analysis'
+YahooContentAnalysis.configure{|y| 
+  y.api_key = ENV['YAHOO_API_KEY']
+  y.api_secret = ENV['YAHOO_API_SECRET']
+}
 
-    YahooContentAnalysis.configure{|y| 
-      y.api_key = ENV['YAHOO_API_KEY']
-      y.api_secret = ENV['YAHOO_API_SECRET']
-    }
+r = YahooContentAnalysis::Client.new.analyze('Italian sculptors and painters of the renaissance favored the Virgin Mary for inspiration.')
 
-    r = YahooContentAnalysis::Client.new.analyze('Italian sculptors and painters of the renaissance favored the Virgin Mary for inspiration.')
-
-    names = r.entities.collect{|e| e.name}
-
+names = r.entities.collect{|e| e.name}
+```
 ## Contributing
 
 1. Fork it
