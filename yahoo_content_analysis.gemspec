@@ -7,10 +7,10 @@ Gem::Specification.new do |gem|
   gem.name          = "yahoo_content_analysis"
   gem.version       = YahooContentAnalysis::VERSION
   gem.authors       = ["Andrew Kuklewicz"]
-  gem.email         = ["andrew@beginsinwonder.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.email         = ["andrew@prx.org"]
+  gem.description   = %q{Use the Yahoo! Content Analysis API to extract topics and entities.}
+  gem.summary       = %q{Use the Yahoo! Content Analysis API to extract topics and entities.}
+  gem.homepage      = "https://github.com/PRX/yahoo_content_analysis"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -27,5 +27,4 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency('rake')
   gem.add_development_dependency('minitest')
-
 end
