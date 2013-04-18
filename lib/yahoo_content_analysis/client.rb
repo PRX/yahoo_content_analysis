@@ -24,17 +24,18 @@ module YahooContentAnalysis
     end
 
     def setup(options={})
-      options = YahooContentAnalysis.options.merge(options)
-      self.current_options = options
+      opts = Hash[options.map{ |k, v| [k.to_sym, v] }]
+      opts = YahooContentAnalysis.options.merge(opts)
+      self.current_options = opts
       Configuration.keys.each do |key|
-        send("#{key}=", options[key])
+        send("#{key}=", opts[key])
       end
     end
 
     def analyze(content, opts={})      
       raise 'Specify a value for the content' unless content
       response = connection.post do |request|
-        request.params = options(content)
+        request.body = options(content)
       end
       YahooContentAnalysis::Response.new(response)
     end

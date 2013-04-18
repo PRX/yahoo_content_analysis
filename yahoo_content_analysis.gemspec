@@ -24,6 +24,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency('hashie',  '>= 0.4.0')
   gem.add_runtime_dependency('simple_oauth')
   gem.add_runtime_dependency('language_list')
+  gem.add_runtime_dependency('activesupport')
+  gem.add_runtime_dependency('stringex')
 
   gem.add_development_dependency('rake')
   gem.add_development_dependency('minitest')

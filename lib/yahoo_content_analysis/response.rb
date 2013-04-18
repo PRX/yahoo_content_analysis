@@ -18,27 +18,45 @@ module YahooContentAnalysis
       parse(response)
     end
 
+    def humanize_topic(topic)
+      topic.titleize.remove_formatting
+    end
+
     def parse(response)
-      r = response.body['query']['results'] || {} 
+      r = response.body['query']['results'] || {}
       @language = get_language(r['lang'])
 
-      @topics = Array((r['yctCategories'] || {})['yctCategory']).collect do |cat|
-        {:name => cat['content'], :score => cat['score']}
+      yahoo_categories = (r['yctCategories'] || {})['yctCategory'] || []
+      yahoo_categories = [yahoo_categories] unless yahoo_categories.is_a?(Array)
+      @topics = yahoo_categories.collect do |cat|
+        {:name => humanize_topic(cat['content']), :score => cat['score'].to_f, :original=>cat['content']}
       end
 
-      @entities = Array((r['entities'] || {})['entity']).collect do |ent|
-        type = extract_type(ent['types'])
+      yahoo_entities = (r['entities'] || {})['entity'] || []
+      yahoo_entities = [yahoo_entities] unless yahoo_entities.is_a?(Array)
+      entities_hash = yahoo_entities.inject({}) do |hash, ent|
+        name = ent['text']['content']
+        if hash.has_key?(name)
+          existing = hash[name]
+          existing[:score] = [existing[:score], ent['score'].to_f].max
+        else
+          type = extract_type(ent['types'])
 
-        entity = {:name => ent['text']['content'], :score => ent['score']}
-        entity[:type] = type if type
-        entity[:wikipedia_url] = ent['wiki_url'] if ent['wiki_url']
+          entity = {:name => ent['text']['content'], :score => ent['score'].to_f}
+          entity[:type] = type if type
+          entity[:wikipedia_url] = ent['wiki_url'] if ent['wiki_url']
 
-        ## these aren't showing up in any results, so not worrying about them
-        # if cat['related_entities'] && cat['related_entities']['wikipedia']
-        # end
+          ## these aren't showing up in any results, so not worrying about them
+          # if cat['related_entities'] && cat['related_entities']['wikipedia']
+          # end
 
-        entity
+          hash[name] = entity
+        end
+
+        hash
       end
+
+      @entities = entities_hash.values
 
     end
 
@@ -51,7 +69,7 @@ module YahooContentAnalysis
     def extract_type(h)
       return nil unless (h && h['type'])
       type = h['type'].is_a?(Array) ? h['type'].first : h['type']
-      (type['content'] || '').sub(/^\/(.*)/, '')
+      (type['content'] || '').split('/')[1].remove_formatting.titleize
     end
 
   end

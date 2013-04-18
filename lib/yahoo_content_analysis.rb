@@ -7,6 +7,9 @@ require 'yahoo_content_analysis/connection'
 require 'yahoo_content_analysis/response'
 require 'yahoo_content_analysis/client'
 
+require 'active_support/all'
+require 'stringex'
+
 module YahooContentAnalysis
   extend Configuration
 end
