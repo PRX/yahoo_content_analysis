@@ -15,15 +15,19 @@ module YahooContentAnalysis
       @relations = []
       @locations = []
 
-      parse(response)
+      parse(response) if response
     end
 
     def humanize_topic(topic)
       topic.titleize.remove_formatting
     end
 
-    def parse(response)
-      r = response.body['query']['results'] || {}
+    def parse(response=raw)
+      return if (response.nil?)
+      return if (!response.respond_to?(:body))
+      return if (!response.body['query'] || !response.body['query']['results'])
+
+      r = response.body['query']['results']
       @language = get_language(r['lang'])
 
       yahoo_categories = (r['yctCategories'] || {})['yctCategory'] || []
@@ -35,6 +39,7 @@ module YahooContentAnalysis
       yahoo_entities = (r['entities'] || {})['entity'] || []
       yahoo_entities = [yahoo_entities] unless yahoo_entities.is_a?(Array)
       entities_hash = yahoo_entities.inject({}) do |hash, ent|
+        # puts "entity: #{ent.inspect}"
         name = ent['text']['content']
         if hash.has_key?(name)
           existing = hash[name]
@@ -67,9 +72,12 @@ module YahooContentAnalysis
     end
 
     def extract_type(h)
+      # puts "extract_type: #{h.inspect}"
       return nil unless (h && h['type'])
       type = h['type'].is_a?(Array) ? h['type'].first : h['type']
-      (type['content'] || '').split('/')[1].remove_formatting.titleize
+      content = (type['content'] || '').split('/')
+      content = (content[1] || content[0]).remove_formatting.titleize
+      content.blank? ? nil : content
     end
 
   end

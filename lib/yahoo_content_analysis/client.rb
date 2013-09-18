@@ -32,8 +32,8 @@ module YahooContentAnalysis
       end
     end
 
-    def analyze(content, opts={})      
-      raise 'Specify a value for the content' unless content
+    def analyze(content, opts={})
+      content = content.to_s.squish
       response = connection.post do |request|
         request.body = options(content)
       end
