@@ -19,7 +19,7 @@ module YahooContentAnalysis
     end
 
     def humanize_topic(topic)
-      topic.titleize.remove_formatting
+      (topic || '').titleize.remove_formatting
     end
 
     def parse(response=raw)
@@ -76,7 +76,7 @@ module YahooContentAnalysis
       return nil unless (h && h['type'])
       type = h['type'].is_a?(Array) ? h['type'].first : h['type']
       content = (type['content'] || '').split('/')
-      content = (content[1] || content[0]).remove_formatting.titleize
+      content = (content[1] || content[0] || '').remove_formatting.titleize
       content.blank? ? nil : content
     end
 

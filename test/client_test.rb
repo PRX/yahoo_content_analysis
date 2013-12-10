@@ -5,3 +5,4 @@ YahooContentAnalysis.configure{|y|
 }
 
 r = YahooContentAnalysis::Client.new.analyze('Italian sculptors and painters of the renaissance favored the Virgin Mary for inspiration.')
+puts r.inspect
