@@ -45,7 +45,7 @@ module YahooContentAnalysis
     end
 
     def condition(content)
-      content.is_a?(URI) ? url(content) : text(content)
+      uri?(content) ? url(content) : text(content)
     end
 
     def url(content)
@@ -64,6 +64,15 @@ module YahooContentAnalysis
         'related_entities' => 'true',
         'show_metadata'    => 'true'
       }
+    end
+
+    def uri?(string)
+      uri = URI.parse(string)
+      %w( http https ).include?(uri.scheme)
+    rescue URI::BadURIError
+      false
+    rescue URI::InvalidURIError
+      false
     end
 
   end
