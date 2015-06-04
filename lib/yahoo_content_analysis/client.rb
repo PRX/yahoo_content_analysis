@@ -41,7 +41,7 @@ module YahooContentAnalysis
     end
 
     def query(content)
-      "SELECT * FROM contentanalysis.analyze WHERE related_entities = \"true\" and #{condition(content)}"
+      "SELECT * FROM contentanalysis.analyze WHERE related_entities = 'true' and #{condition(content)}"
     end
 
     def condition(content)
@@ -49,11 +49,11 @@ module YahooContentAnalysis
     end
 
     def url(content)
-      %{ url = "#{content}" }
+      %{ url = '#{content}' }
     end
 
     def text(content)
-      %{ text = "#{content.gsub('"', '\"')}" }
+      %{ text = '#{content.gsub("'", %q(\\\'))}' }
     end
 
     def options(content)
@@ -74,6 +74,5 @@ module YahooContentAnalysis
     rescue URI::InvalidURIError
       false
     end
-
   end
 end
