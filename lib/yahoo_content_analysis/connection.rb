@@ -21,7 +21,7 @@ module YahooContentAnalysis
         :headers => {
           # generic http headers
           'User-Agent'   => user_agent,
-          'Accept'       => "application/json;charset=utf-8"
+          'Accept'       => 'application/json;charset=utf-8'
         },
         :ssl => {:verify => false},
         :url => endpoint
@@ -50,6 +50,5 @@ module YahooContentAnalysis
         nil
       end
     end
-
   end
 end

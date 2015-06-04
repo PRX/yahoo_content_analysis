@@ -98,6 +98,5 @@ module YahooContentAnalysis
       self.unique             = DEFAULT_UNIQUE
       self
     end
-
   end
 end
