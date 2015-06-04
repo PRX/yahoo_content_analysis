@@ -1,5 +1,12 @@
 # YahooContentAnalysis
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/PRX/yahoo_content_analysis.svg?branch=master)](https://travis-ci.org/PRX/yahoo_content_analysis)
+[![Code Climate](https://codeclimate.com/github/PRX/yahoo_content_analysis/badges/gpa.svg)](https://codeclimate.com/github/PRX/yahoo_content_analysis)
+[![Coverage Status](https://coveralls.io/repos/PRX/yahoo_content_analysis/badge.svg?branch=master)](https://coveralls.io/r/PRX/yahoo_content_analysis?branch=master)
+[![Dependency Status](https://gemnasium.com/PRX/yahoo_content_analysis.svg)](https://gemnasium.com/PRX/yahoo_content_analysis)
+
+
 Use the Yahoo! Content Analysis API to extract topics and entities.
 
 OAuth access is implemented, though not necessary (the docs imply higher limitd if requests are signed).  This should be a useful example for those wanting to do 2-legged OAuth access to Yahoo APIs using Faraday and the OAuth Faraday Middleware.
@@ -24,7 +31,7 @@ Or install it yourself as:
 ```ruby
 require 'yahoo_content_analysis'
 
-YahooContentAnalysis.configure{|y| 
+YahooContentAnalysis.configure{|y|
   y.api_key = ENV['YAHOO_API_KEY']
   y.api_secret = ENV['YAHOO_API_SECRET']
 }
