@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 require 'language_list'
 
 module YahooContentAnalysis
@@ -27,8 +28,8 @@ module YahooContentAnalysis
       return if (!response.respond_to?(:body))
       return if (!response.body['query'] || !response.body['query']['results'])
 
+      @language = get_language(response.body['query']['lang'])
       r = response.body['query']['results']
-      @language = get_language(r['lang'])
 
       yahoo_categories = (r['yctCategories'] || {})['yctCategory'] || []
       yahoo_categories = [yahoo_categories] unless yahoo_categories.is_a?(Array)
@@ -79,6 +80,5 @@ module YahooContentAnalysis
       content = (content[1] || content[0] || '').remove_formatting.titleize
       content.blank? ? nil : content
     end
-
   end
 end
