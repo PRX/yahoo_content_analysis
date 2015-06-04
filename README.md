@@ -6,10 +6,9 @@
 [![Coverage Status](https://coveralls.io/repos/PRX/yahoo_content_analysis/badge.svg?branch=master)](https://coveralls.io/r/PRX/yahoo_content_analysis?branch=master)
 [![Dependency Status](https://gemnasium.com/PRX/yahoo_content_analysis.svg)](https://gemnasium.com/PRX/yahoo_content_analysis)
 
-
 Use the Yahoo! Content Analysis API to extract topics and entities.
 
-OAuth access is implemented, though not necessary (the docs imply higher limitd if requests are signed).  This should be a useful example for those wanting to do 2-legged OAuth access to Yahoo APIs using Faraday and the OAuth Faraday Middleware.
+OAuth access is implemented, though not necessary (the docs imply higher limits if requests are signed).  This should be a useful example for those wanting to do 2-legged OAuth access to Yahoo APIs using Faraday and the OAuth Faraday Middleware.
 
 N.B. - I am not seeing the additional metadata nor related entities returned as the Yahoo docs claim they should.
 
@@ -37,6 +36,12 @@ YahooContentAnalysis.configure{|y|
 }
 
 r = YahooContentAnalysis::Client.new.analyze('Italian sculptors and painters of the renaissance favored the Virgin Mary for inspiration.')
+
+names = r.entities.collect{|e| e.name}
+
+# you can also query a uri
+uri = 'http://www.npr.org/2015/06/03/411524156/in-search-of-the-red-cross-500-million-in-haiti-relief'
+r = YahooContentAnalysis::Client.new.analyze(uri)
 
 names = r.entities.collect{|e| e.name}
 ```
