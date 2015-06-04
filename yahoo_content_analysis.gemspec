@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Use the Yahoo! Content Analysis API to extract topics and entities.}
   gem.summary       = %q{Use the Yahoo! Content Analysis API to extract topics and entities.}
   gem.homepage      = "https://github.com/PRX/yahoo_content_analysis"
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
