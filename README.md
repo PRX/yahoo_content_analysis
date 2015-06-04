@@ -38,15 +38,15 @@ YahooContentAnalysis.configure{|y|
   y.api_secret = ENV['YAHOO_API_SECRET']
 }
 
-r = YahooContentAnalysis::Client.new.analyze('Italian sculptors and painters of the renaissance favored the Virgin Mary for inspiration.')
-
-names = r.entities.collect{|e| e.name}
+# you can query text
+text = 'Italian sculptors and painters of the renaissance favored the Virgin Mary for inspiration.'
+r = YahooContentAnalysis::Client.new.analyze(text)
+names = r.entities.map { |e| e.name }
 
 # you can also query a uri
 uri = 'http://www.npr.org/2015/06/03/411524156/in-search-of-the-red-cross-500-million-in-haiti-relief'
 r = YahooContentAnalysis::Client.new.analyze(uri)
-
-names = r.entities.collect{|e| e.name}
+names = r.entities.map { |e| e.name }
 ```
 ## Contributing
 
